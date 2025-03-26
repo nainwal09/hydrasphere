@@ -1535,16 +1535,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const testimonials = document.querySelectorAll('.testimonial');
     const dots = document.querySelectorAll('.dot');
     let currentIndex = 0;
-    
+
     // Set initial state
     updateSlider();
-    
+
     // Function to update the slider
     function updateSlider() {
-        // Update the transform
         const testimonialSlide = document.querySelector('.testimonial-slide');
-        testimonialSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
+        // Calculate the correct transform value
+        testimonialSlide.style.transform = `translateX(-${currentIndex * (100 / testimonials.length)}%)`;
+
         // Update active dot
         dots.forEach((dot, index) => {
             if (index === currentIndex) {
@@ -1554,7 +1554,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Add click event to each dot
     dots.forEach((dot, index) => {
         dot.addEventListener('click', function() {
@@ -1563,32 +1563,33 @@ document.addEventListener('DOMContentLoaded', function() {
             resetInterval();
         });
     });
-    
+
     // Function to move to the next slide
     function nextSlide() {
         currentIndex = (currentIndex + 1) % testimonials.length;
         updateSlider();
     }
-    
+
     // Set up interval
     let slideInterval = setInterval(nextSlide, 5000);
-    
+
     // Function to reset interval
     function resetInterval() {
         clearInterval(slideInterval);
         slideInterval = setInterval(nextSlide, 5000);
     }
-    
+
     // Optional: Pause on hover
     const testimonialContainer = document.querySelector('.testimonial-container');
     testimonialContainer.addEventListener('mouseenter', function() {
         clearInterval(slideInterval);
     });
-    
+
     testimonialContainer.addEventListener('mouseleave', function() {
         slideInterval = setInterval(nextSlide, 5000);
     });
 });
+
     
     // Smooth scrolling for navigation links
     document.querySelectorAll('nav a, .hero a').forEach(link => {
